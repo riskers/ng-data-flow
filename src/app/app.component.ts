@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ng-data-flow';
+
+  follow(d: string) {
+    alert(d);
+  }
 }
