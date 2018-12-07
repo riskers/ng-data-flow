@@ -4,6 +4,36 @@
     [(ngModel)]="username"
   />
 
-  <button (click)="search()">search</button>
+  <button (click)="search(username)">search</button>
 
+  <div class="main">
+    <div class="users">
+
+        <div style="">
+          <header class="header">
+            <h3 class="title"> sss </h3>
+            <div class="links">
+              <a href="javascript:void(0)" class="link" onClick={onClickPrev}> &lt; </a>
+              <a href="javascript:void(0)" class="link" onClick={onClickNext}> &gt; </a>
+            </div>
+          </header>
+          <ul class="list">
+            <li *ngFor="let user of users" class="item">
+              <img src="{{user.avatar_url}}" class="pic" />
+              {{user.login}}
+              <span class="icon">></span>
+            </li>
+          </ul>
+        </div>
+
+    </div>
+
+    <div class="followers">
+
+    </div>
+
+    <div class="followings">
+
+    </div>
+  </div>
 </div>
