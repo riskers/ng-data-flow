@@ -1,3 +1,18 @@
-<p>
-  list works!
-</p>
+<div>
+  <header class="header">
+    <h3 class="title"> {{title}} </h3>
+    <div class="links">
+      <a href="javascript:void(0)" class="link" onClick={onClickPrev}> &lt; </a>
+      <a href="javascript:void(0)" class="link" onClick={onClickNext}> &gt; </a>
+    </div>
+  </header>
+  <ul class="list">
+    <li *ngFor="let user of users" [ngClass]="{'item': true, 'cursor': isCursor}">
+      <img src="{{user.avatar_url}}" class="pic" />
+      {{user.login}}
+      <span class="icon">
+        {{icon}}
+      </span>
+    </li>
+  </ul>
+</div>
