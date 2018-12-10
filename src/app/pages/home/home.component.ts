@@ -61,7 +61,7 @@ export class HomeComponent implements OnInit {
   }
 
   searchFollowings(username: string) {
-    this.followersLoading = true;
+    this.followingsLoading = true;
     this.followings = [];
     this.githubService.searchFollowings(username, this.followingsPageIndex)
       .pipe(
