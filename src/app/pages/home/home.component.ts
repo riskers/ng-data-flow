@@ -25,6 +25,10 @@ export class HomeComponent implements OnInit {
   followers: IUsers[] = [];
   followerPageIndex = 1;
 
+  followingsLoading = false;
+  followings: IUsers[] = [];
+  followingsPageIndex = 1;
+
   constructor(
     private githubService: GithubService
   ) { }
@@ -54,6 +58,25 @@ export class HomeComponent implements OnInit {
         this.followers = e;
         this.followerPageIndex = this.followerPageIndex + 1;
       });
+  }
+
+  searchFollowings(username: string) {
+    this.followersLoading = true;
+    this.followings = [];
+    this.githubService.searchFollowings(username, this.followingsPageIndex)
+      .pipe(
+        delay(3000),
+      )
+      .subscribe(e => {
+        this.followingsLoading = false;
+        this.followings = e;
+        this.followingsPageIndex = this.followingsPageIndex + 1;
+      });
+  }
+
+  searchFollowersAndFollowings(username: string) {
+    this.searchFollowers(username);
+    this.searchFollowings(username);
   }
 
   ngOnInit() {

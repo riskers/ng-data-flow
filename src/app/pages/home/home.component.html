@@ -17,7 +17,7 @@
         [users]=users
         [pageIndex]=userPageIndex
         (clickArrow)="searchUsers($event)"
-        (clickItem)="searchFollowers($event)"
+        (clickItem)="searchFollowersAndFollowings($event)"
       ></app-list>
     </div>
 
@@ -34,7 +34,15 @@
     </div>
 
     <div class="followings">
-
+      <app-list
+        title="followings"
+        icon=""
+        [loading]=followingsLoading
+        [isCursor]=false
+        [users]=followings
+        [pageIndex]=followingsPageIndex
+        (clickArrow)="searchFollowings($event)"
+      ></app-list>
     </div>
   </div>
 </div>
