@@ -12,22 +12,28 @@ export interface IUsers {
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
+  providers: [GithubService],
 })
 export class HomeComponent implements OnInit {
 
-  private username = '';
-  private users: IUsers[] = [];
-
-  search(username: string) {
-    this.githubService.searchUsers(username, 1)
-      .subscribe(e => {
-        this.users = e.items;
-      });
-  }
+  username = '';
+  userPageIndex = 1;
+  users: IUsers[] = [];
 
   constructor(
     private githubService: GithubService
   ) { }
+
+  ss(page: number) {
+    console.log(page)
+  }
+
+  search(page: number) {
+    this.githubService.searchUsers(this.username, page)
+      .subscribe(e => {
+        this.users = e.items;
+      });
+  }
 
   ngOnInit() {
 

@@ -2,8 +2,8 @@
   <header class="header">
     <h3 class="title"> {{title}} </h3>
     <div class="links">
-      <a href="javascript:void(0)" class="link" onClick={onClickPrev}> &lt; </a>
-      <a href="javascript:void(0)" class="link" onClick={onClickNext}> &gt; </a>
+      <a href="javascript:void(0)" class="link" (click)="clickPrev()"> &lt; </a>
+      <a href="javascript:void(0)" class="link" (click)="clickNext()"> &gt; </a>
     </div>
   </header>
   <ul class="list">

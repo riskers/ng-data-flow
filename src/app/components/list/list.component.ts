@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { IUsers } from 'src/app/pages/home/home.component';
 
 @Component({
@@ -12,8 +12,28 @@ export class ListComponent implements OnInit {
   @Input() icon: string;
   @Input() title: string;
   @Input() users: IUsers[];
+  @Input() username: string;
+  @Input() userPageIndex: number;
+  @Output() searchByPage = new EventEmitter<number>();
 
   constructor() { }
+
+  clickPrev() {
+    const currentPage = this.userPageIndex;
+    if (currentPage === 1) {
+      return;
+    }
+
+    this.userPageIndex = currentPage - 1;
+    this.searchByPage.emit(this.userPageIndex);
+  }
+
+  clickNext() {
+    const currentPage = this.userPageIndex;
+
+    this.userPageIndex = currentPage + 1;
+    this.searchByPage.emit(this.userPageIndex);
+  }
 
   ngOnInit() {
   }

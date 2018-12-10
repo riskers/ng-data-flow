@@ -2,9 +2,10 @@
 
   <input
     [(ngModel)]="username"
+    (keydown.enter)="search(userPageIndex)"
   />
 
-  <button (click)="search(username)">search</button>
+  <button (click)="search(userPageIndex)">search</button>
 
   <div class="main">
     <div class="users">
@@ -13,6 +14,9 @@
         icon=">"
         [isCursor]=true
         [users]=users
+        [username]=username
+        [userPageIndex]=userPageIndex
+        (searchByPage)="search($event)"
       ></app-list>
     </div>
 
