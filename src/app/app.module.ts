@@ -7,12 +7,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ListComponent } from './components/list/list.component';
+import { LoadingComponent } from './components/loading/loading.component';
+import { GithubService } from './services/github.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ListComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,
@@ -21,6 +24,6 @@ import { ListComponent } from './components/list/list.component';
     HttpClientModule,
   ],
   bootstrap: [AppComponent],
-  exports: [ListComponent]
+  providers: [GithubService],
 })
 export class AppModule { }

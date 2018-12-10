@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { delay } from 'rxjs/operators';
 import { GithubService } from 'src/app/services/github.service';
-import { Subject, Observable } from 'rxjs';
 
 export interface IUsers {
   login: string;
@@ -16,6 +16,7 @@ export interface IUsers {
 })
 export class HomeComponent implements OnInit {
 
+  userLoading = false;
   username = '';
   userPageIndex = 1;
   users: IUsers[] = [];
@@ -25,8 +26,14 @@ export class HomeComponent implements OnInit {
   ) { }
 
   search(page: number) {
+    this.userLoading = true;
+    this.users = [];
     this.githubService.searchUsers(this.username, page)
+      .pipe(
+        delay(3000),
+      )
       .subscribe(e => {
+        this.userLoading = false;
         this.users = e.items;
       });
   }

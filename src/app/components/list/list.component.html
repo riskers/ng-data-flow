@@ -6,6 +6,9 @@
       <a href="javascript:void(0)" class="link" (click)="clickNext()"> &gt; </a>
     </div>
   </header>
+
+  <app-loading *ngIf="loading"></app-loading>
+
   <ul class="list">
     <li *ngFor="let user of users" [ngClass]="{'item': true, 'cursor': isCursor}">
       <img src="{{user.avatar_url}}" class="pic" />

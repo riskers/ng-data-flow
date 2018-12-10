@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IUsers } from 'src/app/pages/home/home.component';
 
 @Component({
@@ -8,6 +8,7 @@ import { IUsers } from 'src/app/pages/home/home.component';
 })
 export class ListComponent implements OnInit {
 
+  @Input() loading: boolean;
   @Input() isCursor: boolean;
   @Input() icon: string;
   @Input() title: string;
