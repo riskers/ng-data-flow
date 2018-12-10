@@ -24,10 +24,6 @@ export class HomeComponent implements OnInit {
     private githubService: GithubService
   ) { }
 
-  ss(page: number) {
-    console.log(page)
-  }
-
   search(page: number) {
     this.githubService.searchUsers(this.username, page)
       .subscribe(e => {
