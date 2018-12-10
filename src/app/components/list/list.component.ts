@@ -13,27 +13,31 @@ export class ListComponent implements OnInit {
   @Input() icon: string;
   @Input() title: string;
   @Input() users: IUsers[];
-  @Input() username: string;
-  @Input() userPageIndex: number;
-  @Output() searchByPage = new EventEmitter<number>();
+  @Input() pageIndex: number;
+  @Output() clickArrow = new EventEmitter<number>();
+  @Output() clickItem = new EventEmitter<string>();
 
   constructor() { }
 
+  selectItem(username: string) {
+    this.clickItem.emit(username);
+  }
+
   clickPrev() {
-    const currentPage = this.userPageIndex;
+    const currentPage = this.pageIndex;
     if (currentPage === 1) {
       return;
     }
 
-    this.userPageIndex = currentPage - 1;
-    this.searchByPage.emit(this.userPageIndex);
+    this.pageIndex = currentPage - 1;
+    this.clickArrow.emit(this.pageIndex);
   }
 
   clickNext() {
-    const currentPage = this.userPageIndex;
+    const currentPage = this.pageIndex;
 
-    this.userPageIndex = currentPage + 1;
-    this.searchByPage.emit(this.userPageIndex);
+    this.pageIndex = currentPage + 1;
+    this.clickArrow.emit(this.pageIndex);
   }
 
   ngOnInit() {

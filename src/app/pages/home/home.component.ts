@@ -21,11 +21,15 @@ export class HomeComponent implements OnInit {
   userPageIndex = 1;
   users: IUsers[] = [];
 
+  followersLoading = false;
+  followers: IUsers[] = [];
+  followerPageIndex = 1;
+
   constructor(
     private githubService: GithubService
   ) { }
 
-  search(page: number) {
+  searchUsers(page: number) {
     this.userLoading = true;
     this.users = [];
     this.githubService.searchUsers(this.username, page)
@@ -35,6 +39,20 @@ export class HomeComponent implements OnInit {
       .subscribe(e => {
         this.userLoading = false;
         this.users = e.items;
+      });
+  }
+
+  searchFollowers(username: string) {
+    this.followersLoading = true;
+    this.followers = [];
+    this.githubService.searchFollowers(username, this.followerPageIndex)
+      .pipe(
+        delay(3000),
+      )
+      .subscribe(e => {
+        this.followersLoading = false;
+        this.followers = e;
+        this.followerPageIndex = this.followerPageIndex + 1;
       });
   }
 

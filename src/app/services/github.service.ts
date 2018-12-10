@@ -9,9 +9,14 @@ import { IUsers } from '../pages/home/home.component';
 })
 export class GithubService {
 
-  searchUsers(username: string, page: number): Observable<{items: IUsers[]}> {
+  searchFollowers(username: string, page: number): Observable<{items: IUsers[]}> {
     return this.http
-      .get<{items: IUsers[]}>(`https://api.github.com/search/users?q=${username}&page=${page}`);
+      .get<{items: IUsers[]}>(`https://api.github.com/users/${username}/followers?page=${page}`);
+  }
+
+  searchUsers(username: string, page: number): Observable<IUsers[]> {
+    return this.http
+      .get<IUsers[]>(`https://api.github.com/search/users?q=${username}&page=${page}`);
   }
 
   constructor(

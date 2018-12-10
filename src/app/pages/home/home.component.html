@@ -2,10 +2,10 @@
 
   <input
     [(ngModel)]="username"
-    (keydown.enter)="search(userPageIndex)"
+    (keydown.enter)="searchUsers(userPageIndex)"
   />
 
-  <button (click)="search(userPageIndex)">search</button>
+  <button (click)="searchUsers(userPageIndex)">search</button>
 
   <div class="main">
     <div class="users">
@@ -15,14 +15,22 @@
         [loading]=userLoading
         [isCursor]=true
         [users]=users
-        [username]=username
-        [userPageIndex]=userPageIndex
-        (searchByPage)="search($event)"
+        [pageIndex]=userPageIndex
+        (clickArrow)="searchUsers($event)"
+        (clickItem)="searchFollowers($event)"
       ></app-list>
     </div>
 
     <div class="followers">
-
+      <app-list
+        title="followers"
+        icon=""
+        [loading]=followersLoading
+        [isCursor]=false
+        [users]=followers
+        [pageIndex]=followerPageIndex
+        (clickArrow)="searchFollowers($event)"
+      ></app-list>
     </div>
 
     <div class="followings">
