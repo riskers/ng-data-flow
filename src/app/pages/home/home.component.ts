@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { delay } from 'rxjs/operators';
-import { GithubService } from 'src/app/services/github.service';
+import { GithubService, ISearchApi } from 'src/app/services/github.service';
 
 import { IUser } from './home.interface';
 
@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
   userLoading = false;
   userPageIndex = 1;
   users: IUser[] = [];
+  selectUsername = '';
 
   followersLoading = false;
   followers: IUser[] = [];
@@ -29,14 +30,14 @@ export class HomeComponent implements OnInit {
     private githubService: GithubService
   ) { }
 
-  searchUsers(searchUsername: string) {
-    if (!searchUsername) {
+  searchUsers(res: ISearchApi) {
+    if (!res.username) {
       return;
     }
 
     this.userLoading = true;
     this.users = [];
-    this.githubService.searchUsers(searchUsername, this.userPageIndex)
+    this.githubService.searchUsers(res.username, res.page)
       .pipe(
         delay(2000),
       )
@@ -46,10 +47,10 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  searchFollowers(searchUsername: string, page: number) {
+  searchFollowers(res: ISearchApi) {
     this.followersLoading = true;
     this.followers = [];
-    this.githubService.searchFollowers(searchUsername, page)
+    this.githubService.searchFollowers(res.username, res.page)
       .pipe(
         delay(2000),
       )
@@ -59,10 +60,10 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  searchFollowings(searchUsername: string, page: number) {
+  searchFollowings(res: ISearchApi) {
     this.followingsLoading = true;
     this.followings = [];
-    this.githubService.searchFollowings(searchUsername, page)
+    this.githubService.searchFollowings(res.username, res.page)
       .pipe(
         delay(2000),
       )
@@ -73,8 +74,9 @@ export class HomeComponent implements OnInit {
   }
 
   searchFollowersAndFollowings(searchUsername: string) {
-    this.searchFollowers(searchUsername, 1);
-    this.searchFollowings(searchUsername, 1);
+    this.selectUsername = searchUsername;
+    this.searchFollowers({username: searchUsername, page: 1});
+    this.searchFollowings({username: searchUsername, page: 1});
   }
 
   ngOnInit() {

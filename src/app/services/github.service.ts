@@ -14,19 +14,21 @@ export interface ISearchApi {
 })
 export class GithubService {
 
+  url = 'https://api.github.com';
+
   searchUsers(username: string, page: number): Observable<{items: IUser[]}> {
     return this.http
-      .get<{items: IUser[]}>(`https://api.github.com/search/users?q=${username}&page=${page}`);
+      .get<{items: IUser[]}>(`${this.url}/search/users?q=${username}&page=${page}`);
   }
 
   searchFollowers(username: string, page: number): Observable<IUser[]> {
     return this.http
-      .get<IUser[]>(`https://api.github.com/users/${username}/followers?page=${page}`);
+      .get<IUser[]>(`${this.url}/users/${username}/followers?page=${page}`);
   }
 
   searchFollowings(username: string, page: number): Observable<IUser[]> {
     return this.http
-      .get<IUser[]>(`https://api.github.com/users/${username}/following?page=${page}`);
+      .get<IUser[]>(`${this.url}/users/${username}/following?page=${page}`);
   }
 
   constructor(

@@ -2,14 +2,15 @@
 
   <input
     [(ngModel)]="searchUsername"
-    (keydown.enter)="searchUsers(searchUsername)"
+    (keydown.enter)="searchUsers({username: searchUsername, page: 1})"
   />
 
-  <button (click)="searchUsers(searchUsername)">search</button>
+  <button (click)="searchUsers({username: searchUsername, page: 1})">search</button>
 
   <div class="main">
     <div class="users">
       <app-list
+        [username]="searchUsername"
         title="users"
         icon=">"
         [loading]=userLoading
@@ -23,6 +24,7 @@
 
     <div class="followers">
       <app-list
+        [username]=selectUsername
         title="followers"
         icon=""
         [loading]=followersLoading
@@ -35,6 +37,7 @@
 
     <div class="followings">
       <app-list
+        [username]=selectUsername
         title="followings"
         icon=""
         [loading]=followingsLoading

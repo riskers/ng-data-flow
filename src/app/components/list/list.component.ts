@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IUser } from 'src/app/pages/home/home.interface';
+import { ISearchApi } from 'src/app/services/github.service';
 
 @Component({
   selector: 'app-list',
@@ -14,7 +15,8 @@ export class ListComponent implements OnInit {
   @Input() title: string;
   @Input() users: IUser[];
   @Input() pageIndex: number;
-  @Output() clickArrow: EventEmitter<number> = new EventEmitter();
+  @Input() username: string;
+  @Output() clickArrow: EventEmitter<ISearchApi> = new EventEmitter();
   @Output() clickItem: EventEmitter<string> = new EventEmitter();
 
   constructor() { }
@@ -30,14 +32,21 @@ export class ListComponent implements OnInit {
     }
 
     this.pageIndex = currentPage - 1;
-    this.clickArrow.emit(this.pageIndex);
+    this.clickArrow.emit({
+      username: this.username,
+      page: this.pageIndex,
+    });
   }
 
   clickNext() {
     const currentPage = this.pageIndex;
 
     this.pageIndex = currentPage + 1;
-    this.clickArrow.emit(this.pageIndex);
+
+    this.clickArrow.emit({
+      username: this.username,
+      page: this.pageIndex,
+    });
   }
 
   ngOnInit() {
