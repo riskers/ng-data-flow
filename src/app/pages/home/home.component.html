@@ -1,11 +1,11 @@
 <div>
 
   <input
-    [(ngModel)]="username"
-    (keydown.enter)="searchUsers(username, userPageIndex)"
+    [(ngModel)]="searchUsername"
+    (keydown.enter)="searchUsers(searchUsername)"
   />
 
-  <button (click)="searchUsers(username, userPageIndex)">search</button>
+  <button (click)="searchUsers(searchUsername)">search</button>
 
   <div class="main">
     <div class="users">

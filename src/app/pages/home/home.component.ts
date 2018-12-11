@@ -12,8 +12,8 @@ import { IUser } from './home.interface';
 })
 export class HomeComponent implements OnInit {
 
+  searchUsername = '';
   userLoading = false;
-  username = '';
   userPageIndex = 1;
   users: IUser[] = [];
 
@@ -29,14 +29,14 @@ export class HomeComponent implements OnInit {
     private githubService: GithubService
   ) { }
 
-  searchUsers(username: string) {
-    if (!username) {
+  searchUsers(searchUsername: string) {
+    if (!searchUsername) {
       return;
     }
 
     this.userLoading = true;
     this.users = [];
-    this.githubService.searchUsers(username, this.userPageIndex)
+    this.githubService.searchUsers(searchUsername, this.userPageIndex)
       .pipe(
         delay(2000),
       )
@@ -46,37 +46,35 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  searchFollowers(username: string, page: number) {
+  searchFollowers(searchUsername: string, page: number) {
     this.followersLoading = true;
     this.followers = [];
-    this.githubService.searchFollowers(username, page)
+    this.githubService.searchFollowers(searchUsername, page)
       .pipe(
         delay(2000),
       )
       .subscribe(e => {
         this.followersLoading = false;
         this.followers = e;
-        // this.followerPageIndex = this.followerPageIndex + 1;
       });
   }
 
-  searchFollowings(username: string, page: number) {
+  searchFollowings(searchUsername: string, page: number) {
     this.followingsLoading = true;
     this.followings = [];
-    this.githubService.searchFollowings(username, page)
+    this.githubService.searchFollowings(searchUsername, page)
       .pipe(
         delay(2000),
       )
       .subscribe(e => {
         this.followingsLoading = false;
         this.followings = e;
-        // this.followingsPageIndex = this.followingsPageIndex + 1;
       });
   }
 
-  searchFollowersAndFollowings(username: string) {
-    this.searchFollowers(username, 1);
-    this.searchFollowings(username, 1);
+  searchFollowersAndFollowings(searchUsername: string) {
+    this.searchFollowers(searchUsername, 1);
+    this.searchFollowings(searchUsername, 1);
   }
 
   ngOnInit() {
