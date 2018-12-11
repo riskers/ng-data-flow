@@ -14,8 +14,8 @@ export class ListComponent implements OnInit {
   @Input() title: string;
   @Input() users: IUser[];
   @Input() pageIndex: number;
-  @Output() clickArrow = new EventEmitter<number>();
-  @Output() clickItem = new EventEmitter<string>();
+  @Output() clickArrow: EventEmitter<number> = new EventEmitter();
+  @Output() clickItem: EventEmitter<string> = new EventEmitter();
 
   constructor() { }
 
