@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { delay } from 'rxjs/operators';
-import { GithubService, ISearchApi } from 'src/app/services/github.service';
+import { GithubService, ISearchQuery } from 'src/app/services/github.service';
 
 import { IUser } from './home.interface';
 
@@ -30,14 +30,15 @@ export class HomeComponent implements OnInit {
     private githubService: GithubService
   ) { }
 
-  searchUsers(res: ISearchApi) {
-    if (!res.username) {
+  onSubmit(query: ISearchQuery) {
+    if (!query.username) {
       return;
     }
 
+    this.userPageIndex = 1;
     this.userLoading = true;
     this.users = [];
-    this.githubService.searchUsers(res.username, res.page)
+    this.githubService.searchUsers(query)
       .pipe(
         delay(2000),
       )
@@ -47,10 +48,10 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  searchFollowers(res: ISearchApi) {
+  getFollowers(query: ISearchQuery) {
     this.followersLoading = true;
     this.followers = [];
-    this.githubService.searchFollowers(res.username, res.page)
+    this.githubService.searchFollowers(query)
       .pipe(
         delay(2000),
       )
@@ -60,10 +61,10 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  searchFollowings(res: ISearchApi) {
+  getFollowings(query: ISearchQuery) {
     this.followingsLoading = true;
     this.followings = [];
-    this.githubService.searchFollowings(res.username, res.page)
+    this.githubService.searchFollowings(query)
       .pipe(
         delay(2000),
       )
@@ -73,10 +74,14 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  searchFollowersAndFollowings(searchUsername: string) {
-    this.selectUsername = searchUsername;
-    this.searchFollowers({username: searchUsername, page: 1});
-    this.searchFollowings({username: searchUsername, page: 1});
+  searchFollowersAndFollowings(username: string) {
+    // this.reset();
+    this.followerPageIndex = 1;
+    this.followingsPageIndex = 1;
+
+    this.selectUsername = username;
+    this.getFollowers({username, page: 1});
+    this.getFollowings({username, page: 1});
   }
 
   ngOnInit() {

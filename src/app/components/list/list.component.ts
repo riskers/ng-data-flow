@@ -1,13 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { IUser } from 'src/app/pages/home/home.interface';
-import { ISearchApi } from 'src/app/services/github.service';
+import { ISearchQuery } from 'src/app/services/github.service';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css']
 })
-export class ListComponent implements OnInit {
+export class ListComponent implements OnInit, OnChanges {
 
   @Input() loading: boolean;
   @Input() isCursor: boolean;
@@ -16,7 +16,7 @@ export class ListComponent implements OnInit {
   @Input() users: IUser[];
   @Input() pageIndex: number;
   @Input() username: string;
-  @Output() clickArrow: EventEmitter<ISearchApi> = new EventEmitter();
+  @Output() clickArrow: EventEmitter<ISearchQuery> = new EventEmitter();
   @Output() clickItem: EventEmitter<string> = new EventEmitter();
 
   constructor() { }
@@ -50,6 +50,15 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit() {
+
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.username) {
+      if (changes.username.previousValue !== changes.username.currentValue) {
+        this.pageIndex = 1;
+      }
+    }
   }
 
 }

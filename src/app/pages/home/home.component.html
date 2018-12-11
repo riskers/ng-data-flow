@@ -2,10 +2,10 @@
 
   <input
     [(ngModel)]="searchUsername"
-    (keydown.enter)="searchUsers({username: searchUsername, page: 1})"
+    (keydown.enter)="onSubmit({username: searchUsername, page: 1})"
   />
 
-  <button (click)="searchUsers({username: searchUsername, page: 1})">search</button>
+  <button (click)="onSubmit({username: searchUsername, page: 1})">search</button>
 
   <div class="main">
     <div class="users">
@@ -13,25 +13,25 @@
         [username]="searchUsername"
         title="users"
         icon=">"
-        [loading]=userLoading
-        [isCursor]=true
-        [users]=users
-        [pageIndex]=userPageIndex
-        (clickArrow)="searchUsers($event)"
+        [loading]="userLoading"
+        [isCursor]="true"
+        [users]="users"
+        [pageIndex]="userPageIndex"
+        (clickArrow)="onSubmit($event)"
         (clickItem)="searchFollowersAndFollowings($event)"
       ></app-list>
     </div>
 
     <div class="followers">
       <app-list
-        [username]=selectUsername
+        [username]="selectUsername"
         title="followers"
         icon=""
-        [loading]=followersLoading
-        [isCursor]=false
-        [users]=followers
-        [pageIndex]=followerPageIndex
-        (clickArrow)="searchFollowers($event)"
+        [loading]="followersLoading"
+        [isCursor]="false"
+        [users]="followers"
+        [pageIndex]="followerPageIndex"
+        (clickArrow)="getFollowers($event)"
       ></app-list>
     </div>
 
@@ -44,7 +44,7 @@
         [isCursor]=false
         [users]=followings
         [pageIndex]=followingsPageIndex
-        (clickArrow)="searchFollowings($event)"
+        (clickArrow)="getFollowings($event)"
       ></app-list>
     </div>
   </div>
