@@ -13,7 +13,7 @@
     <li
       *ngFor="let user of users"
       [ngClass]="{'item': true, 'cursor': isCursor}"
-      (click)="selectItem(user.login)"
+      (click)="selectItem(user.login, 1)"
     >
       <img src="{{user.avatar_url}}" class="pic" />
       {{user.login}}

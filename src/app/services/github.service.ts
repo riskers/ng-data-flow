@@ -2,26 +2,31 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { IUsers } from '../pages/home/home.component';
+import { IUser } from '../pages/home/home.interface';
+
+export interface ISearchApi {
+  username: string;
+  page: number;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class GithubService {
 
-  searchUsers(username: string, page: number): Observable<{items: IUsers[]}> {
+  searchUsers(username: string, page: number): Observable<{items: IUser[]}> {
     return this.http
-      .get<{items: IUsers[]}>(`https://api.github.com/search/users?q=${username}&page=${page}`);
+      .get<{items: IUser[]}>(`https://api.github.com/search/users?q=${username}&page=${page}`);
   }
 
-  searchFollowers(username: string, page: number): Observable<IUsers[]> {
+  searchFollowers(username: string, page: number): Observable<IUser[]> {
     return this.http
-      .get<IUsers[]>(`https://api.github.com/users/${username}/followers?page=${page}`);
+      .get<IUser[]>(`https://api.github.com/users/${username}/followers?page=${page}`);
   }
 
-  searchFollowings(username: string, page: number): Observable<IUsers[]> {
+  searchFollowings(username: string, page: number): Observable<IUser[]> {
     return this.http
-      .get<IUsers[]>(`https://api.github.com/users/${username}/following?page=${page}`);
+      .get<IUser[]>(`https://api.github.com/users/${username}/following?page=${page}`);
   }
 
   constructor(

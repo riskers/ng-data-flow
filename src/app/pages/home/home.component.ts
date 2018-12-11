@@ -2,11 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { delay } from 'rxjs/operators';
 import { GithubService } from 'src/app/services/github.service';
 
-export interface IUsers {
-  login: string;
-  id: number;
-  avatar_url: string;
-}
+import { IUser } from './home.interface';
 
 @Component({
   selector: 'app-home',
@@ -19,26 +15,30 @@ export class HomeComponent implements OnInit {
   userLoading = false;
   username = '';
   userPageIndex = 1;
-  users: IUsers[] = [];
+  users: IUser[] = [];
 
   followersLoading = false;
-  followers: IUsers[] = [];
+  followers: IUser[] = [];
   followerPageIndex = 1;
 
   followingsLoading = false;
-  followings: IUsers[] = [];
+  followings: IUser[] = [];
   followingsPageIndex = 1;
 
   constructor(
     private githubService: GithubService
   ) { }
 
-  searchUsers(page: number) {
+  searchUsers(username: string) {
+    if (!username) {
+      return;
+    }
+
     this.userLoading = true;
     this.users = [];
-    this.githubService.searchUsers(this.username, page)
+    this.githubService.searchUsers(username, this.userPageIndex)
       .pipe(
-        delay(3000),
+        delay(2000),
       )
       .subscribe(e => {
         this.userLoading = false;
@@ -46,37 +46,37 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  searchFollowers(username: string) {
+  searchFollowers(username: string, page: number) {
     this.followersLoading = true;
     this.followers = [];
-    this.githubService.searchFollowers(username, this.followerPageIndex)
+    this.githubService.searchFollowers(username, page)
       .pipe(
-        delay(3000),
+        delay(2000),
       )
       .subscribe(e => {
         this.followersLoading = false;
         this.followers = e;
-        this.followerPageIndex = this.followerPageIndex + 1;
+        // this.followerPageIndex = this.followerPageIndex + 1;
       });
   }
 
-  searchFollowings(username: string) {
+  searchFollowings(username: string, page: number) {
     this.followingsLoading = true;
     this.followings = [];
-    this.githubService.searchFollowings(username, this.followingsPageIndex)
+    this.githubService.searchFollowings(username, page)
       .pipe(
-        delay(3000),
+        delay(2000),
       )
       .subscribe(e => {
         this.followingsLoading = false;
         this.followings = e;
-        this.followingsPageIndex = this.followingsPageIndex + 1;
+        // this.followingsPageIndex = this.followingsPageIndex + 1;
       });
   }
 
   searchFollowersAndFollowings(username: string) {
-    this.searchFollowers(username);
-    this.searchFollowings(username);
+    this.searchFollowers(username, 1);
+    this.searchFollowings(username, 1);
   }
 
   ngOnInit() {
