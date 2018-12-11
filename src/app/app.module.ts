@@ -9,6 +9,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { ListComponent } from './components/list/list.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { GithubService } from './services/github.service';
+import { TestComponent } from './pages/test/test.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { GithubService } from './services/github.service';
     HomeComponent,
     ListComponent,
     LoadingComponent,
+    TestComponent,
   ],
   imports: [
     BrowserModule,
